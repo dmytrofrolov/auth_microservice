@@ -1,4 +1,4 @@
-from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
 from django.urls import path
 from .views import CreateUserView, TestSecuredView, manage_user
 
@@ -7,5 +7,6 @@ urlpatterns = [
     path('login/', obtain_jwt_token, name='login_user'),
     path('user/', manage_user, name='manage_user'),
     path('secure/', TestSecuredView.as_view(), name='secure_endpoint'),
-    path('token_verify/', verify_jwt_token, name='verify_jwt_token'),
+    path('token_verify/', verify_jwt_token, name='verify_token'),
+    path('token_refresh/', refresh_jwt_token, name='refresh_token'),
 ]

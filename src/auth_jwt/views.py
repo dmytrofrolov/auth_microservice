@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
@@ -21,7 +21,7 @@ class CreateUserView(mixins.CreateModelMixin, GenericViewSet):
         response = super(CreateUserView, self).create(request, args, kwargs)
         payload = jwt_payload_handler(response.data.serializer.instance)
         token = jwt_encode_handler(payload)
-        return Response({'token': token})
+        return Response({'token': token}, status=status.HTTP_201_CREATED)
 
 
 class ManageUserView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericViewSet):
